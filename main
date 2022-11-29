@@ -1,0 +1,294 @@
+#!/bin/bash
+# Luke Olson, PA5, 11/24/2022, CSE224
+
+# This is an appointment scheduling program. It utilizes a GUI made from Dialog in Bash.
+# This program is capable of shceduling an appointment, viewing all appointments, editing/deleting an already made appointment, and viewing today's appointments
+# It saves your appointment into a file called "save.txt" in order to remember the appointments you have made in the past
+# The optional features I chose to implement are editing a already made appointment, adding time to an appointment, and viewing all appointments on a given day (today)
+# If save file breaks, delete all content inside save.txt. Make an appointment during the next run, and then press "View appointments"
+
+
+##################################################
+#          Definitions of Dialog Boxes
+##################################################
+
+# CREATE RADIOLIST FOR CURRENT APPT
+#radio=$(dialog     --clear --radiolist "Current Appointments" 0 0 0 \
+#                   1 "Appointment one" 0 \
+#                   2 "Appointment two" 0 \
+#                   --output-fd 1)
+
+
+# CREATE CALENDAR
+#appt=$(dialog      --clear \
+#                   --date-format "%m/%d/%Y " \
+#                   --calendar \
+#                   "Appointment Selector" 0 0 \
+#                   $currentDate \
+#                   --output-fd 1)
+
+
+# CREATE HOMESCREEN/MENU
+#menu=$(dialog      --clear \
+#                   --menu "Main" \
+#                   0 0 0 \
+#                   1 "Make an appointment" 2 "Show appointments" \
+#                   --output-fd 1)
+
+
+# SHOW APPOINTMENT JUST SCHEDULED
+#show=$(dialog       --clear \
+#                    --msgbox \
+#                    "Your appointment is scheduled for . Please enter more details to finalize." \
+#                    0 0 \
+#                    --output-fd 1)
+
+
+# SHOW APPOINTMENTS
+#choice=$(dialog     --clear --extra-button --extra-label "Delete" \
+#                    --ok-label "Edit" \
+#                    --menu "Current Appointments" 0 0 0 \
+#                    ${radioVars[*]} \
+#                    --output-fd 1)
+
+
+# SHOW INPUT BOXES FOR APPT DETAILS AND TIME
+#detailName=$(dialog     --clear \
+#                        --inputbox "Appointment Details" \
+#                        0 0 --output-fd 1)
+#
+#detailTime=$(dialog     --clear \
+#                        --inputbox "Appointment Time" \
+#                        0 0 --output-fd 1)
+
+
+#  SHOW FORM FOR EDITING APPOINTMENT DETAILS
+#
+# out=$(dialog      --clear --form "Appointment Editor" 0 0 0 \
+#                   "Date:" 1 1 "${editArr[0]}" 1 12 15 0 \
+#                   "Details:" 2 1 "${editArr[1]}" 2 12 15 0 \
+#                   "Time:" 3 1 "${editArr[2]}" 3 12 15 0 \
+#                   --output-fd 1)
+
+
+# MESSAGE BOX FOR NO APPOINTMENTS
+#uhoh=$(dialog       --clear --ok-label "Back" \
+#                    --msgbox "You have no appointments scheduled for today!" \
+#                    0 0 \
+#                    --output-fd 1)
+
+
+##################################################
+#                Script Start
+##################################################
+
+while [[ 1 -eq 1 ]]
+do
+   # Before User Interaction
+    currentDate=$(date +"%d %m %Y")             # save current date for default date on calendar
+    otherDate=$(date +"%m/%d/%Y")               # used for comparison to dateArr elements
+    day=$(date +"%A")                           # saves current day of week
+    arrNum=`awk 'END {print NR}' save.txt`      # prints how many lines exist in file
+    full=`awk '{print $0}' save.txt`            # save all elements in save.txt
+    first=`awk -F "|" '{print $2}' save.txt`    # get first column of values in save.txt
+    middle=`awk -F "|" '{print $3}' save.txt`   # get middle column (appt description) from save.txt                                
+    last=`awk -F "|" '{print $4}' save.txt`     # get last column (time) from save.txt
+    fullArr=($full)                             # create array of all elements from save.txt
+    dateArr=($first)                            # array of dates from save.txt
+    apptArr=($middle)                           # array of appts from save.txt
+    timeArr=($last)                             # array of times from save.txt
+    menuVars=()                                 # used to save date and appt description of already made appointments
+    matchedAppts=()                             # used to save matched appointments for "View today"
+    j=0                                         # variable for looping when deleting an appointment
+    f=0                                         # variable for looping when editing an appointment
+    i=0                                         # loop variable
+    r=0                                         # loop variable
+    showIndex=1
+    todayIndex=1
+    fullCowTxt=`awk '{print $0}' cowsays.txt`   # All variables below are for printing random cowsays as a 
+    fullCowArr=($fullCowTxt)                    # goodbye message
+    num=${#fullCowArr[*]}
+    randInt=$(((1+$RANDOM)%40))                 # Get random int 1-41
+
+
+
+    # Begin User Interaction
+    menu=$(dialog      --clear --cancel-label "Quit" --ok-label "Select" \
+                       --menu "Main Menu" \
+                       0 0 0 \
+                       1 "Make appointment" 2 "Show all appointments" 3 "View today" \
+                       --output-fd 1)
+
+    menuExit=$?
+
+    if [[ $menuExit == 1 ]]
+    then
+        break
+    fi
+
+    # Below will create calendar, save appointment, and print confirmation message
+    if [[ $menu == 1 ]]
+    then
+        appt=$(dialog       --clear --ok-label "Select" \
+                            --date-format "%m/%d/%Y" \
+                            --calendar \
+                            "Appointment Selector" 0 0 \
+                            $currentDate \
+                            --output-fd 1)
+
+        if [[ $appt == "" ]]
+        then
+            continue
+        fi
+
+        echo -n "|" >> save.txt         # -
+        echo -n $appt >> save.txt       # Formatting lines in save.txt
+        echo -n "|" >> save.txt         # -
+
+        detailName=$(dialog     --clear --ok-label "Submit" \
+                                --cancel-label "Skip" \
+                                --inputbox "Appointment Details" \
+                                0 0 --output-fd 1)
+
+        if [[ $detailName == "" ]]
+        then
+            detailName="Default"
+        fi
+
+        echo -n $detailName >> save.txt
+        echo -n "|" >> save.txt
+
+
+        detailTime=$(dialog     --clear --ok-label "Submit" \
+                                --cancel-label "Skip" \
+                                --inputbox "Appointment Time" \
+                                0 0 --output-fd 1)
+
+        if [[ $detailTime == "" ]]
+        then
+            detailTime="Default"
+        fi
+
+        echo -n $detailTime >> save.txt
+        echo -n "|" >> save.txt
+        echo "" >> save.txt
+
+        show=$(dialog       --clear \
+                            --msgbox \
+                            "Your $detailName appointment is scheduled for $appt at $detailTime." \
+                            0 0 \
+                            --output-fd 1)
+    fi
+
+    # Launch "Current appointment" window. Implement edit appointment in place, and delete appointment features.
+    if [[ $menu == 2 ]]
+    then
+        while [[ $i -lt $arrNum ]]
+        do
+            new="${apptArr[$i]}--${dateArr[$i]}"
+            menuVars+=("$showIndex $new")
+            i=$(($i+1))
+            showIndex=$(($showIndex+1))
+        done
+
+        if [[ ${#menuVars[*]} == 0 ]]
+        then
+            uhoh=$(dialog       --clear --ok-label "Back" \
+                                --msgbox "You have no appointments scheduled!" \
+                                0 0 \
+                                --output-fd 1)
+            continue
+        fi
+
+        choice=$(dialog     --clear --extra-button --extra-label "Delete" \
+                            --ok-label "Edit" --cancel-label "Back" \
+                            --menu "Current Appointments" 0 0 0 \
+                            ${menuVars[*]} \
+                            --output-fd 1)
+
+        exit=$?
+
+        case "$exit" in
+            0)  # Edit appointment
+                edit=${fullArr[$(($choice-1))]}
+                stripped=`echo $edit | tr '|' ' '`
+                editArr=($stripped)
+
+                out=$(dialog        --clear --form "Appointment Editor" 0 0 0 \
+                                    "Date:" 1 1 "${editArr[0]}" 1 12 15 0 \
+                                    "Details:" 2 1 "${editArr[1]}" 2 12 15 0 \
+                                    "Time:" 3 1 "${editArr[2]}" 3 12 15 0 \
+                                    --output-fd 1)
+
+                outExit=$?
+
+                if [[ $outExit == 1 ]]
+                then
+                    continue
+                fi
+
+                outStart=`echo $out | sed 's/[[:space:]]/|/g'`
+                outMid=`echo $outStart | sed 's/^/|/'`
+                outEnd=`echo $outMid | sed 's/$/|/'`
+                echo $outEnd
+                fullArr[$(($choice-1))]=$outEnd
+
+                echo -n "" > save.txt       # Erase content from save.txt. This is preparing to save edited appointment back
+                while [[ $f -lt $arrNum ]]
+                do  
+                    echo "${fullArr[$f]}" >> save.txt
+                    f=$(($f+1))
+                done ;;
+            3)  # Delete appointment
+                delete=${fullArr[$(($choice-1))]}
+                echo -n "" > save.txt
+                while [[ $j -le $arrNum ]]
+                do
+                    if [[ ! $delete =~ "${fullArr[$j]}" ]]
+                    then
+                        echo "${fullArr[$j]}" >> save.txt
+                    fi
+                    j=$(($j+1))
+                done ;;
+        esac
+    fi
+
+    # Launch "View today" window, either show appointments that match today's date or show error message
+    if [[ $menu == 3 ]]
+    then
+        while [[ $r -lt $arrNum ]]
+        do
+            if [[ $otherDate == ${dateArr[$r]} ]]
+            then
+                echo "here"
+                new="- ${apptArr[$r]}--${timeArr[$r]}"
+                matchedAppts+=("$new")
+            fi
+            r=$(($r+1))
+        done
+
+        if [[ ${#matchedAppts[*]} == 0 ]]
+        then
+            uhoh=$(dialog       --clear --ok-label "Back" \
+                                --msgbox "You have no appointments scheduled for today!" \
+                                0 0 \
+                                --output-fd 1)
+            continue
+        fi
+
+        display=$(dialog    --clear --no-cancel --ok-label "Back" \
+                            --menu "Appoinments for $day -------($otherDate)-------" 0 0 0 \
+                            ${matchedAppts[*]} \
+                            --output-fd 1)
+    fi
+
+done
+
+# Fun goodbye message :)
+
+message=`cowsay -f ${fullCowArr[$randInt]} "See You Next Time!"`
+goodbye=$(dialog        --clear --ok-label "Logout" \
+                        --cr-wrap --no-collapse --no-nl-expand \
+                        --msgbox "$message" \
+                        0 0 \
+                        --output-fd 1)
