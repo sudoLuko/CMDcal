@@ -4,6 +4,8 @@
 
 CMDcal is a small, command-line operated, appointment scheduling application built in a single Bash file. It makes use of the [Dialog](https://linux.die.net/man/1/dialog) library for the GUI, and saves all appointment data in a plain-text file called 'save.txt'. I built this for my CS224 class (currently in college) and am putting it here for street cred!
 
+This program was built on linux. No gurantees it will run anywhere else.
+
 ### Features
 - Schedule an appointment (date, time, reason) //add pic of calander
  	![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/calendar.jpg?raw=true)
