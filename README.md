@@ -12,6 +12,7 @@ CMDcal is a small, command-line operated, appointment scheduling application bui
 - View today's appointments //add pic
  	![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/today.jpg?raw=true)
 - Fun 'Logout' screen consisting of a random [cowsay](https://github.com/schacon/cowsay) character
+  ![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/turkey.jpg?raw=true)
 
 
 Feel free to download and change as much as you'd like! Code is commented per requirments of my professor.
