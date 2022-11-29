@@ -14,5 +14,5 @@ CMDCal is a small, command-line operated, appointment scheduling application bui
 Feel free to download and change as much as you'd like! Code is commented per requirments of my professor.
 
 
-## Quirks
+### Quirks
 - Does not allow spaces in 'Appointment Details' window. Spaces will confuse loading data from 'save.txt' into windows. If this happens to you, remove all data from save.txt or remove incorrect entry. 
