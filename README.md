@@ -16,6 +16,8 @@ This program was built on Linux. No gurantees it will run anywhere else.
 - Fun 'Logout' screen consisting of a random [cowsay](https://github.com/schacon/cowsay) character
 ![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/turkey.jpg?raw=true)
 
+(images look horrible on wide screen, will fix later)
+
 ### Quirks
 - Does not allow spaces in 'Appointment Details' window. Spaces will confuse loading data from 'save.txt' into windows. If this happens to you, remove all data from save.txt or remove incorrect entry. 
 - Takes you back to homescreen after you have completed an action. (ex. You have just deleted an appointment -> instead of staying in 'Current Appointments' window, you are taken back to 'Main Menu')
