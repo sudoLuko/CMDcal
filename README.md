@@ -15,7 +15,7 @@ CMDcal is a small, command-line operated, appointment scheduling application bui
   ![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/turkey.jpg?raw=true)
 
 
-Feel free to download and change as much as you'd like! Code is commented per requirments of my professor.
+Feel free to download and change as much as you'd like! Code was commented per requirments of my professor.
 
 
 ### Quirks
