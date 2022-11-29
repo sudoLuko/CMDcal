@@ -8,13 +8,13 @@ This program was built on Linux. No gurantees it will run anywhere else.
 
 ### Features
 - Schedule an appointment (date, time, reason)
- 	![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/calendar.jpg?raw=true)
+![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/calendar.jpg?raw=true)
 - View/Edit/Delete appointments
- 	![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/stuff.jpg?raw=true)
+![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/stuff.jpg?raw=true)
 - View today's appointments
- 	![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/today.jpg?raw=true)
+![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/today.jpg?raw=true)
 - Fun 'Logout' screen consisting of a random [cowsay](https://github.com/schacon/cowsay) character
-  ![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/turkey.jpg?raw=true)
+![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/turkey.jpg?raw=true)
 
 ### Quirks
 - Does not allow spaces in 'Appointment Details' window. Spaces will confuse loading data from 'save.txt' into windows. If this happens to you, remove all data from save.txt or remove incorrect entry. 
