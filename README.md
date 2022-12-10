@@ -8,15 +8,13 @@ This program was built on Linux. No gurantees it will run anywhere else.
 
 ### Features
 - Schedule an appointment (date, time, reason)
-![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/calendar.jpg?raw=true)
+<img src="img/calendar.jpg" style="vertical-align:left">
 - View/Edit/Delete appointments
-![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/stuff.jpg?raw=true)
+<img src="img/stuff.jpg" style="vertical-align:left">
 - View today's appointments
-![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/today.jpg?raw=true)
-- Fun 'Logout' screen consisting of a random [cowsay](https://github.com/schacon/cowsay) character
-![alt text](https://github.com/lukeolson0/CMDcal/blob/main/img/turkey.jpg?raw=true)
-
-(images look horrible on wide screen, will fix later)
+<img src="img/today.jpg" style="vertical-align:left">
+- Fun 'Logout' screen consisting of a random <a href="https://github.com/schacon/cowsay">cowsay</a> character
+<img src="img/turkey.jpg" style="vertical-align:left">
 
 ### Quirks
 - Does not allow spaces in 'Appointment Details' window. Spaces will confuse loading data from 'save.txt' into windows. If this happens to you, remove all data from save.txt or remove incorrect entry. 
@@ -27,3 +25,5 @@ This program was built on Linux. No gurantees it will run anywhere else.
 2. Run `git clone https://github.com/sudoLuko/CMDcal.git` inside your file
 3. Change into the project file `cd CMDcal`
 4. Run executable called **main**
+
+<a href="https://github.com/schacon/cowsay">cowsay</a>
