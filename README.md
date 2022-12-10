@@ -25,5 +25,3 @@ This program was built on Linux. No gurantees it will run anywhere else.
 2. Run `git clone https://github.com/sudoLuko/CMDcal.git` inside your file
 3. Change into the project file `cd CMDcal`
 4. Run executable called **main**
-
-<a href="https://github.com/schacon/cowsay">cowsay</a>
